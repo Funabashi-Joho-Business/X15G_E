@@ -2,7 +2,7 @@ package jp.ac.chiba_fjb.e.e_graduate_test;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import jp.ac.chiba_fjb.e.e_graduate_test.data.RouteReceiver;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -12,6 +12,10 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+        Object o = RouteReceiver.getRoute("東京タワー","スカイツリー","driving");
+        if(o == null)
+            System.out.println("データ取得エラー");
+        else
+            System.out.println(o.toString());
     }
 }

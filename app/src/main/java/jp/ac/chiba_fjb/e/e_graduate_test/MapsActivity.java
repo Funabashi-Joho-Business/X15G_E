@@ -1,7 +1,9 @@
 package jp.ac.chiba_fjb.e.e_graduate_test;
 
-import android.support.v4.app.FragmentActivity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,5 +44,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        String start = "東京駅";
+        String target = "スカイツリー";
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setClassName(getClass().getPackage().getName(),getClass().getName());
+        intent.setData(Uri.parse("http://maps.google.com/maps?saddr="+start+"&daddr="+target+"&dirflg=d"));
+        startActivity(intent);
     }
 }

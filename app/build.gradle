@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "jp.ac.chiba_fjb.e.e_graduate_test"
         minSdkVersion 15
@@ -35,4 +35,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.google.android.gms:play-services-maps:11.0.2'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.9.0@jar'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.0@jar'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.0@jar'
 }
