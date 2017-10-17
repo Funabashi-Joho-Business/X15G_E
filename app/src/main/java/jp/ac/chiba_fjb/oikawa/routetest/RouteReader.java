@@ -2,6 +2,8 @@ package jp.ac.chiba_fjb.oikawa.routetest;
 
 import android.os.Handler;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -14,6 +16,9 @@ import java.net.URLEncoder;
 public class RouteReader {
 	public interface  RouteListener{
 		void onRoute(RouteData routeData);
+	}
+	public interface  PlaceListener{
+		void onPlace(PlaceData placeData);
 	}
 
 	public static boolean recvRoute(String origin, String dest, final RouteListener listener){
@@ -45,5 +50,34 @@ public class RouteReader {
 		}.start();
 		return true;
 
+	}
+	public static boolean recvPlace(String apiKey,String type,LatLng loc,int radius, final PlaceListener listener){
+		String url = null;
+		try {
+			String type2 = URLEncoder.encode(type, "UTF-8");
+			url = String.format(
+				"https://maps.googleapis.com/maps/api/place/search/json?language=ja&"+
+					"key=%s&types=%s&location=%f,%f&radius=%d",
+					apiKey,type2,loc.latitude,loc.longitude,radius);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		final Handler handler = new Handler();
+		final String finalUrl = url;
+		new Thread(){
+			@Override
+			public void run() {
+				final PlaceData placeData = Json.send(finalUrl,null,PlaceData.class);
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						listener.onPlace(placeData);
+					}
+				});
+			}
+		}.start();
+		return true;
 	}
 }
