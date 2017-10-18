@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class PlaceData {
 	@JsonIgnoreProperties(ignoreUnknown=true)
 	public static class Geometry{
-		Location location;
+		public Location location;
 	}
 	@JsonIgnoreProperties(ignoreUnknown=true)
 	public static class Results{

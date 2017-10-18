@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 			Location start = r.legs[0].start_location;
 			Location end = r.legs[0].end_location;
 
-			RouteReader.recvPlace("",
+			RouteReader.recvPlace("AIzaSyAs9SIjr9oMM530M9fj-dtHRWkoPYve8HY",
 				"food",new LatLng(start.lat, start.lng),300,this);
 		}
 	}
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 			Location loc = result.geometry.location;
 
 			mMap.addMarker(new MarkerOptions().position(new LatLng(loc.lat, loc.lng)).title(result.name));
+			
 		}
 	}
 }
