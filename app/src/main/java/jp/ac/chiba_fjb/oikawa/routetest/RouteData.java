@@ -13,11 +13,30 @@ public class RouteData{
 		public jp.ac.chiba_fjb.oikawa.routetest.Location start_location;
 		public String end_address;
 		public jp.ac.chiba_fjb.oikawa.routetest.Location end_location;
+
+		@JsonIgnoreProperties(ignoreUnknown=true)
+			public static class Steps{
+			public jp.ac.chiba_fjb.oikawa.routetest.Location end_location[];
+			public jp.ac.chiba_fjb.oikawa.routetest.Location start_location[];
+			public jp.ac.chiba_fjb.oikawa.routetest.Points polyline;
+		}
+
 	}
+
+	@JsonIgnoreProperties(ignoreUnknown=true)
+	public static class Geocoded_waypoints{
+			public String geocoder_status;
+			public String place_id;
+			public String types[];
+	}
+
 	@JsonIgnoreProperties(ignoreUnknown=true)
 	public static class Routes{
 		public Legs[] legs;
+		public Legs.Steps[] steps;
 	}
 
 	public Routes[] routes;
+
+    public Geocoded_waypoints[] waypoints;
 }

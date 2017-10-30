@@ -15,6 +15,9 @@ public class PlaceData {
 	public static class Results{
 		public Geometry geometry;
 		public String name;
+		public String types[];
 	}
+
+
 	public Results[] results;
 }
