@@ -7,11 +7,9 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-
 /**
  * Created by oikawa on 2017/10/16.
  */
-
 
 public class RouteReader {
 	public interface  RouteListener{
@@ -19,6 +17,12 @@ public class RouteReader {
 	}
 	public interface  PlaceListener{
 		void onPlace(PlaceData placeData);
+	}
+	public interface  Place2Listener{
+		void onPlace2(PlaceidData placeidData);
+	}
+	public interface  Place3Listener{
+		void onPlace3(RouteRoad routeRoad);
 	}
 
 	public static boolean recvRoute(String origin, String dest, final RouteListener listener){
@@ -29,7 +33,7 @@ public class RouteReader {
 
 			url = String.format(
 				"https://maps.googleapis.com/maps/api/directions/json?language=ja&"+
-				"origin=%s&destination=%s&mode=driving&sensor=false",origin2,dest2);
+				"origin=%s&destination=%s&mode=walking&sensor=false",origin2,dest2);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			return false;
@@ -80,4 +84,38 @@ public class RouteReader {
 		}.start();
 		return true;
 	}
+
+	public static boolean recvPlace2(final String place_id, String apiKey, final Place2Listener listener){
+		String url = null;
+		try {
+			String place_id2 = URLEncoder.encode(place_id, "UTF-8");
+			url = String.format(
+					"https://maps.googleapis.com/maps/api/place/details/json?"+"placeid=%s&key=%s",
+					place_id2,apiKey);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		final Handler handler = new Handler();
+		final String finalUrl = url;
+		new Thread(){
+			@Override
+			public void run() {
+				final PlaceidData placeidData = Json.send(finalUrl,null,PlaceidData.class);
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						listener.onPlace2(placeidData);
+					}
+				});
+
+			}
+		}.start();
+		return true;
+	}
+
+
+
+
 }

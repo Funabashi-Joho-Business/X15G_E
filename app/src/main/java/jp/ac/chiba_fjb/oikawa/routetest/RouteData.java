@@ -16,11 +16,12 @@ public class RouteData{
 
 		@JsonIgnoreProperties(ignoreUnknown=true)
 			public static class Steps{
-			public jp.ac.chiba_fjb.oikawa.routetest.Location end_location[];
-			public jp.ac.chiba_fjb.oikawa.routetest.Location start_location[];
-			public jp.ac.chiba_fjb.oikawa.routetest.Points polyline;
-		}
+			public jp.ac.chiba_fjb.oikawa.routetest.Location end_location;
+			public jp.ac.chiba_fjb.oikawa.routetest.Location start_location;
 
+		}
+		public Steps[] steps;
+//	public jp.ac.chiba_fjb.oikawa.routetest.Points polyline;
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown=true)
@@ -28,12 +29,13 @@ public class RouteData{
 			public String geocoder_status;
 			public String place_id;
 			public String types[];
+
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown=true)
 	public static class Routes{
 		public Legs[] legs;
-		public Legs.Steps[] steps;
+
 	}
 
 	public Routes[] routes;
