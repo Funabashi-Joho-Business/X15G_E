@@ -21,9 +21,7 @@ public class RouteReader {
 	public interface  Place2Listener{
 		void onPlace2(PlaceidData placeidData);
 	}
-	public interface  Place3Listener{
-		void onPlace3(RouteRoad routeRoad);
-	}
+
 
 	public static boolean recvRoute(String origin, String dest, final RouteListener listener){
 		String url = null;
@@ -50,6 +48,8 @@ public class RouteReader {
 						listener.onRoute(routeData);
 					}
 				});
+
+
 			}
 		}.start();
 		return true;

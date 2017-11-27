@@ -1,7 +1,9 @@
 package jp.ac.chiba_fjb.oikawa.routetest;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -12,25 +14,34 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, RouteReader.RouteListener, RouteReader.PlaceListener,RouteReader.Place2Listener{
 
-	private RouteRoad routeRoad;
 	private Location sloc;
 	private Location eloc;
 	private GoogleMap mMap;
-	private TextView Mname;
-	private TextView Mtype;//タイプとってない
-	private TextView Mphone;
+	private TextView mName;
+	private TextView mType;//タイプとってない
+	private TextView mPhone;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Mname = (TextView) findViewById(R.id.name);
-		Mtype = (TextView) findViewById(R.id.type);
-		Mphone = (TextView) findViewById(R.id.formatted_phone_number);
+		mName = (TextView) findViewById(R.id.name);
+		mPhone = (TextView) findViewById(R.id.formatted_phone_number);
+
+		LinearLayout output = (LinearLayout) findViewById(R.id.output);
+		LinearLayout layout;
+		for(int i=0;i<50;i++){
+			layout = (LinearLayout)getLayoutInflater().inflate(R.layout.layout1, null);   //レイアウトをその場で生成
+			layout.setTag(i);
+			output.addView(layout);
+		}
 
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 			                                                      .findFragmentById(R.id.map);
@@ -44,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 		LatLng sydney = new LatLng(35.7016369, 139.9836126);                //位置設定
 		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,14.0f));   //範囲2.0～21.0(全体～詳細)
 		//ルート検索
-		RouteReader.recvRoute("船橋駅","船橋情報ビジネス専門学校",this);
+		RouteReader.recvRoute("JR船橋駅","船橋情報ビジネス専門学校",this);
 	}
 
 	@Override
@@ -58,26 +69,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 			mMap.addMarker(new MarkerOptions().position(new LatLng(sloc.lat, sloc.lng)).title(r.legs[0].start_address));
 			mMap.addMarker(new MarkerOptions().position(new LatLng(eloc.lat, eloc.lng)).title(r.legs[0].end_address));
 			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(sloc.lat,sloc.lng),14.0f));
-			//String url = null;
-			//url = String.format("https://roads.googleapis.com/v1/snapToRoads?path=%f,%f|%f,%f&key=AIzaSyDGFuXp-_GWmCe8lMaw-e71V3p19uQkJIo",sloc.lat,sloc.lng,eloc.lat,eloc.lng);
-			//routeRoad = Json.send(url,null,RouteRoad.class);
 
-			int i;
-			for(i=0;i<r.legs[0].steps.length;i++) {
-				sloc = r.legs[0].steps[i].start_location;
-				eloc = r.legs[0].steps[i].end_location;
-				line.add(new LatLng(sloc.lat,sloc.lng));
-				line.add(new LatLng(eloc.lat,eloc.lng));
-			}
-			eloc = r.legs[0].end_location;
-			line.add(new LatLng(eloc.lat,eloc.lng));
-			mMap.addPolyline(line);
+    		List<List<HashMap<String,String>>> list = new parseJsonpOfDirectionAPI().parse(routeData);
+			RouteSearch(list);
 
-			RouteReader.recvPlace("AIzaSyDGFuXp-_GWmCe8lMaw-e71V3p19uQkJIo",
-					"food",new LatLng(sloc.lat, sloc.lng),300,this);
-			RouteReader.recvPlace("AIzaSyDGFuXp-_GWmCe8lMaw-e71V3p19uQkJIo",
-					"food",new LatLng(eloc.lat, eloc.lng),300,this);
 		}
+
+		RouteReader.recvPlace("AIzaSyDGFuXp-_GWmCe8lMaw-e71V3p19uQkJIo",
+				"food",new LatLng(sloc.lat, sloc.lng),50,this);
+
+		for(int i=0;i<routeData.routes[0].legs[0].steps.length;i++) {
+			RouteReader.recvPlace("AIzaSyDGFuXp-_GWmCe8lMaw-e71V3p19uQkJIo",
+					"food", new LatLng(routeData.routes[0].legs[0].steps[i].start_location.lat,routeData.routes[0].legs[0].steps[i].start_location.lng), 50, this);
+		}
+
+		RouteReader.recvPlace("AIzaSyDGFuXp-_GWmCe8lMaw-e71V3p19uQkJIo",
+				"food",new LatLng(eloc.lat, eloc.lng),50,this);
 	}
 
 	@Override
@@ -86,44 +93,47 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 			System.out.println(result.geometry.location.lat+","+result.geometry.location.lng);
 			System.out.println(result.name);
-
 			String place_id = result.place_id;
-
-			if(result.types[0]=="grocery_or_supermarket"||result.types[0]=="food"){
+//			System.out.print(result.types);
+//     		mType.setText(result.types[0]);
+			if(result.types[0].toString().equals("grocery_or_supermarket")||result.types[0].toString().equals("food")||result.types[0].toString().equals("convenience_store")){
 
 			}
 			else {
 				RouteReader.recvPlace2(place_id, "AIzaSyDGFuXp-_GWmCe8lMaw-e71V3p19uQkJIo", this);
 				Location loc = result.geometry.location;
+				mMap.addMarker(new MarkerOptions().position(new LatLng(result.geometry.location.lat,result.geometry.location.lng)).title(result.name));
 			}
-//			mMap.addMarker(new MarkerOptions().position(new LatLng(loc.lat, loc.lng)).title(result.name));
+
 		}
 	}
 
 	@Override
 	public void onPlace2(PlaceidData placeidData) {
-		Mtype.setText(placeidData.result.types[0]);
-		if(Mtype.getText().toString().equals("restaurant")){
-			Mtype.setText("レストラン");
-		}
-		else if(Mtype.getText().toString().equals("cafe")){
-			Mtype.setText("カフェ");
-		}
-		else if(Mtype.getText().toString().equals("bar")){
-			Mtype.setText("バー");
-		}
-		else if(Mtype.getText().toString().equals("bakery")){
-			Mtype.setText("パン屋");
-		}
-		else if(Mtype.getText().toString().equals("meal_takeaway")){
-			Mtype.setText("テイクアウト形式");
-		}
-		else{
-			Mtype.setText("");
-		}
 
-		Mname.setText(placeidData.result.name);
-		Mphone.setText(placeidData.result.formatted_phone_number);
+//		Mtype.setText(placeidData.result.types[0]);
+//		if(Mtype.getText().toString().equals("restaurant")){
+//			Mtype.setText("レストラン");
+//		}
+//		else if(Mtype.getText().toString().equals("cafe")){
+//			Mtype.setText("カフェ");
+//		}
+//		else if(Mtype.getText().toString().equals("bar")){
+//			Mtype.setText("バー");
+//		}
+//		else if(Mtype.getText().toString().equals("bakery")){
+//			Mtype.setText("パン屋");
+//		}
+//		else if(Mtype.getText().toString().equals("meal_takeaway")){
+//			Mtype.setText("テイクアウト形式");
+//		}
+//		else{
+//			Mtype.setText("");
+//		}
+
+//		Mname.setText(placeidData.result.name);
+//		Mphone.setText(placeidData.result.formatted_phone_number);
+
 
 		System.out.println(placeidData.result.formatted_phone_number);
 		int i;
@@ -134,21 +144,29 @@ if(placeidData.result.opening_hours!=null&&placeidData.result.opening_hours.week
 	}
 	}
 
-//	@Override
-//	public void onPlace3(RouteRoad routeroad) {
-//		PolylineOptions line = new PolylineOptions();
-//		int i;
-//		line.add(new LatLng(slat,slng));
-//
-//			for(i=0;i<length;i++) {
-//				Location mstart = ;
-//				Location mend = r.legs[0].steps[i].start_location;
-//
-//			}
-//		line.add(new LatLng(elat,elng));
-//			mMap.addPolyline(line);
-//
-//
-//	}
-
+public void RouteSearch(List<List<HashMap<String, String>>> result){
+    ArrayList<LatLng> points = null;
+    PolylineOptions lineOptions = null;
+    MarkerOptions markerOptions = new MarkerOptions();
+    if(result.size() != 0){
+        for(int i=0;i<result.size();i++){
+            points = new ArrayList<LatLng>();
+            lineOptions = new PolylineOptions();
+            List<HashMap<String, String>> path = result.get(i);
+            for(int j=0;j<path.size();j++){
+                HashMap<String,String> point = path.get(j);
+                double lat = Double.parseDouble(point.get("lat"));
+                double lng = Double.parseDouble(point.get("lng"));
+                LatLng position = new LatLng(lat, lng);
+                points.add(position);
+            }
+            //ポリライン
+            lineOptions.addAll(points);
+            lineOptions.width(10);
+            lineOptions.color(Color.CYAN);
+        }
+        //描画
+        mMap.addPolyline(lineOptions);
+    }
+}
 }

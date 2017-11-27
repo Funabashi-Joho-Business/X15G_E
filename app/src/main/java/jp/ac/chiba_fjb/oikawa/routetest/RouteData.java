@@ -13,11 +13,20 @@ public class RouteData{
 		public jp.ac.chiba_fjb.oikawa.routetest.Location start_location;
 		public String end_address;
 		public jp.ac.chiba_fjb.oikawa.routetest.Location end_location;
+		public jp.ac.chiba_fjb.oikawa.routetest.Dis distance;
+		public jp.ac.chiba_fjb.oikawa.routetest.Dis duration;
 
 		@JsonIgnoreProperties(ignoreUnknown=true)
 			public static class Steps{
 			public jp.ac.chiba_fjb.oikawa.routetest.Location end_location;
 			public jp.ac.chiba_fjb.oikawa.routetest.Location start_location;
+			public jp.ac.chiba_fjb.oikawa.routetest.Points polyline;
+			public String html_instructions;
+			public jp.ac.chiba_fjb.oikawa.routetest.Dis distance;
+			public jp.ac.chiba_fjb.oikawa.routetest.Dis duration;
+
+			public String travel_mode;
+
 
 		}
 		public Steps[] steps;
