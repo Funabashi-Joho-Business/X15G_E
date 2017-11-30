@@ -10,11 +10,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,25 +29,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 	private TextView mName;
 	private TextView mType;//タイプとってない
 	private TextView mPhone;
-
+    private TextView mOpen;
+    private int count=0;
+	private List<String> idlist= new ArrayList();
+	private Calendar cal;
+	private int week;
+	private int day;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		mName = (TextView) findViewById(R.id.name);
-		mPhone = (TextView) findViewById(R.id.formatted_phone_number);
-
-		LinearLayout output = (LinearLayout) findViewById(R.id.output);
-		LinearLayout layout;
-		for(int i=0;i<50;i++){
-			layout = (LinearLayout)getLayoutInflater().inflate(R.layout.layout1, null);   //レイアウトをその場で生成
-			layout.setTag(i);
-			output.addView(layout);
-		}
-
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 			                                                      .findFragmentById(R.id.map);
+
 		mapFragment.getMapAsync(this);
 	}
 
@@ -66,43 +63,57 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 			RouteData.Routes r = routeData.routes[0];
 			sloc = r.legs[0].start_location;
 			eloc = r.legs[0].end_location;
-			mMap.addMarker(new MarkerOptions().position(new LatLng(sloc.lat, sloc.lng)).title(r.legs[0].start_address));
-			mMap.addMarker(new MarkerOptions().position(new LatLng(eloc.lat, eloc.lng)).title(r.legs[0].end_address));
+			mMap.addMarker(new MarkerOptions().position(new LatLng(sloc.lat, sloc.lng)).title(r.legs[0].start_address).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+			mMap.addMarker(new MarkerOptions().position(new LatLng(eloc.lat, eloc.lng)).title(r.legs[0].end_address).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(sloc.lat,sloc.lng),14.0f));
 
     		List<List<HashMap<String,String>>> list = new parseJsonpOfDirectionAPI().parse(routeData);
 			RouteSearch(list);
+			cal = Calendar.getInstance();
+			week = cal.get(Calendar.DAY_OF_WEEK);
+			System.out.println(week);
+			switch (week){
+				case 1:day=6;
+				case 2:day=0;
+				case 3:day=1;
+				case 4:day=2;
+				case 5:day=3;
+				case 6:day=4;
+				case 7:day=5;
+			}
 
+			System.out.println(day);
 		}
 
-		RouteReader.recvPlace("AIzaSyDGFuXp-_GWmCe8lMaw-e71V3p19uQkJIo",
-				"food",new LatLng(sloc.lat, sloc.lng),50,this);
+		RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
+				"food",new LatLng(sloc.lat, sloc.lng),25,this);
 
 		for(int i=0;i<routeData.routes[0].legs[0].steps.length;i++) {
-			RouteReader.recvPlace("AIzaSyDGFuXp-_GWmCe8lMaw-e71V3p19uQkJIo",
-					"food", new LatLng(routeData.routes[0].legs[0].steps[i].start_location.lat,routeData.routes[0].legs[0].steps[i].start_location.lng), 50, this);
+			RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
+					"food", new LatLng(routeData.routes[0].legs[0].steps[i].start_location.lat,routeData.routes[0].legs[0].steps[i].start_location.lng), 25, this);
 		}
 
-		RouteReader.recvPlace("AIzaSyDGFuXp-_GWmCe8lMaw-e71V3p19uQkJIo",
-				"food",new LatLng(eloc.lat, eloc.lng),50,this);
+		RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
+				"food",new LatLng(eloc.lat, eloc.lng),25,this);
 	}
 
 	@Override
 	public void onPlace(PlaceData placeData) {
 		for(PlaceData.Results result : placeData.results){
-
+			int count=0;
 			System.out.println(result.geometry.location.lat+","+result.geometry.location.lng);
 			System.out.println(result.name);
 			String place_id = result.place_id;
 //			System.out.print(result.types);
 //     		mType.setText(result.types[0]);
-			if(result.types[0].toString().equals("grocery_or_supermarket")||result.types[0].toString().equals("food")||result.types[0].toString().equals("convenience_store")){
+			if(result.types[0].toString().equals("grocery_or_supermarket")||result.types[0].toString().equals("food")||result.types[0].toString().equals("convenience_store")||idlist.contains(result.place_id)==true){
 
 			}
 			else {
-				RouteReader.recvPlace2(place_id, "AIzaSyDGFuXp-_GWmCe8lMaw-e71V3p19uQkJIo", this);
+				RouteReader.recvPlace2(place_id, "AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc", this);
 				Location loc = result.geometry.location;
 				mMap.addMarker(new MarkerOptions().position(new LatLng(result.geometry.location.lat,result.geometry.location.lng)).title(result.name));
+				idlist.add(result.place_id);
 			}
 
 		}
@@ -110,6 +121,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 	@Override
 	public void onPlace2(PlaceidData placeidData) {
+		LinearLayout output = (LinearLayout) findViewById(R.id.output);
+		LinearLayout layout;
+
+		layout = (LinearLayout)getLayoutInflater().inflate(R.layout.layout1, null);   //レイアウトをその場で生成
+		output.addView(layout);
+		mName = (TextView) layout.findViewById(R.id.name);
+		mPhone = (TextView) layout.findViewById(R.id.formatted_phone_number);
+        mOpen = (TextView) layout.findViewById(R.id.opening_hours);
+		mName.setText(placeidData.result.name);
+		mPhone.setText(placeidData.result.formatted_phone_number);
+		if(placeidData.result.opening_hours!=null&&placeidData.result.opening_hours.weekday_text.length>0){
+			mOpen.setText(placeidData.result.opening_hours.weekday_text[day]);
+		}
+		else{
+			mOpen.setText("不明");
+		}
 
 //		Mtype.setText(placeidData.result.types[0]);
 //		if(Mtype.getText().toString().equals("restaurant")){
@@ -142,6 +169,7 @@ if(placeidData.result.opening_hours!=null&&placeidData.result.opening_hours.week
 	for(i=0;i<7;i++) {
 		System.out.println(placeidData.result.opening_hours.weekday_text[i]);
 	}
+
 	}
 
 public void RouteSearch(List<List<HashMap<String, String>>> result){

@@ -51,7 +51,6 @@
                 android:id="@+id/opening_hours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="定休日:水曜日\n10:00~13:00"
                 android:textSize="12sp" />
 
             <TextView
