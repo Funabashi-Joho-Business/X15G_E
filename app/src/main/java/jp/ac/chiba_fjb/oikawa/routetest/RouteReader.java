@@ -90,7 +90,7 @@ public class RouteReader {
 		try {
 			String place_id2 = URLEncoder.encode(place_id, "UTF-8");
 			url = String.format(
-					"https://maps.googleapis.com/maps/api/place/details/json?"+"placeid=%s&key=%s",
+					"https://maps.googleapis.com/maps/api/place/details/json?language=ja&"+"placeid=%s&key=%s",
 					place_id2,apiKey);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

@@ -91,15 +91,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 		}
 
 		RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
-				"food",new LatLng(sloc.lat, sloc.lng),25,this);
+				"food",new LatLng(sloc.lat, sloc.lng),50,this);
 
 		for(int i=0;i<routeData.routes[0].legs[0].steps.length;i++) {
 			RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
-					"food", new LatLng(routeData.routes[0].legs[0].steps[i].start_location.lat,routeData.routes[0].legs[0].steps[i].start_location.lng), 25, this);
+					"food", new LatLng(routeData.routes[0].legs[0].steps[i].start_location.lat,routeData.routes[0].legs[0].steps[i].start_location.lng), 50, this);
 		}
 
 		RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
-				"food",new LatLng(eloc.lat, eloc.lng),25,this);
+				"food",new LatLng(eloc.lat, eloc.lng),50,this);
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 			mOpen.setText(placeidData.result.opening_hours.weekday_text[day]);
 		}
 		else{
-			mOpen.setText("不明");
+			mOpen.setText("");
 		}
 
 //		Mtype.setText(placeidData.result.types[0]);
