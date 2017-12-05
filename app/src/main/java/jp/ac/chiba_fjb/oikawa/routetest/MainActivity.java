@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 	private Calendar cal;
 	private int week;
 	private int day;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,18 +72,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 			RouteSearch(list);
 			cal = Calendar.getInstance();
 			week = cal.get(Calendar.DAY_OF_WEEK);
-			System.out.println(week);
 			switch (week){
 				case 1:day=6;
+                    break;
 				case 2:day=0;
+                    break;
 				case 3:day=1;
+                    break;
 				case 4:day=2;
+                    break;
 				case 5:day=3;
+                    break;
 				case 6:day=4;
+                    break;
 				case 7:day=5;
+                    break;
 			}
-
-			System.out.println(day);
 		}
 
 		RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
@@ -132,6 +137,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 		mName.setText(placeidData.result.name);
 		mPhone.setText(placeidData.result.formatted_phone_number);
 		if(placeidData.result.opening_hours!=null&&placeidData.result.opening_hours.weekday_text.length>0){
+			placeidData.result.opening_hours.weekday_text[day].toString().replace("Monday","月曜日");
+			System.out.println(placeidData.result.opening_hours.weekday_text[day]);
 			mOpen.setText(placeidData.result.opening_hours.weekday_text[day]);
 		}
 		else{
@@ -160,16 +167,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //		Mname.setText(placeidData.result.name);
 //		Mphone.setText(placeidData.result.formatted_phone_number);
-
-
-		System.out.println(placeidData.result.formatted_phone_number);
-		int i;
-
-if(placeidData.result.opening_hours!=null&&placeidData.result.opening_hours.weekday_text!=null && placeidData.result.opening_hours.weekday_text.length>0)
-	for(i=0;i<7;i++) {
-		System.out.println(placeidData.result.opening_hours.weekday_text[i]);
-	}
-
 	}
 
 public void RouteSearch(List<List<HashMap<String, String>>> result){

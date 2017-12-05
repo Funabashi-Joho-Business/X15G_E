@@ -17,9 +17,9 @@ public class parseJsonpOfDirectionAPI {
 
     //   MainFragment ma;
 
-    public List<List<HashMap<String,String>>> parse(RouteData jObject){
+    public List<List<HashMap<String, String>>> parse(RouteData jObject) {
         String temp = "";
-        List<List<HashMap<String, String>>> routes = new ArrayList<List<HashMap<String,String>>>() ;
+        List<List<HashMap<String, String>>> routes = new ArrayList<List<HashMap<String, String>>>();
         RouteData.Routes jsonRoutes = null;
         RouteData.Legs[] jsonLegs = null;
         RouteData.Legs.Steps[] jsonSteps = null;
@@ -27,16 +27,16 @@ public class parseJsonpOfDirectionAPI {
         try {
             jsonRoutes = jObject.routes[0];
 
-            for(int i=0;i<jsonRoutes.legs.length;i++){
+            for (int i = 0; i < jsonRoutes.legs.length; i++) {
                 jsonLegs = jsonRoutes.legs;
 
                 //スタート地点・住所
                 String s_address = jsonLegs[i].start_address;
-               // ma.info_A = s_address;
+                // ma.info_A = s_address;
 
                 //到着地点・住所
                 String e_address = jsonLegs[i].end_address;
-               // ma.info_B = e_address;
+                // ma.info_B = e_address;
 
                 String distance_txt = jsonLegs[i].distance.text;
                 temp += distance_txt + "<br><br>";
@@ -46,10 +46,10 @@ public class parseJsonpOfDirectionAPI {
 
                 List path = new ArrayList<HashMap<String, String>>();
 
-                for(int j=0;j<jsonLegs.length;j++){
+                for (int j = 0; j < jsonLegs.length; j++) {
                     jsonSteps = jsonLegs[j].steps;
 
-                    for(int k=0;k<jsonSteps.length;k++){
+                    for (int k = 0; k < jsonSteps.length; k++) {
                         String polyline = "";
                         polyline = jsonSteps[k].polyline.points;
                         String instructions = jsonSteps[k].html_instructions;
@@ -60,10 +60,10 @@ public class parseJsonpOfDirectionAPI {
 
                         List<LatLng> list = decodePoly(polyline);
 
-                        for(int l=0;l<list.size();l++){
+                        for (int l = 0; l < list.size(); l++) {
                             HashMap<String, String> hm = new HashMap<String, String>();
-                            hm.put("lat", Double.toString(((LatLng)list.get(l)).latitude) );
-                            hm.put("lng", Double.toString(((LatLng)list.get(l)).longitude) );
+                            hm.put("lat", Double.toString(((LatLng) list.get(l)).latitude));
+                            hm.put("lng", Double.toString(((LatLng) list.get(l)).longitude));
                             path.add(hm);
                         }
                     }
@@ -72,9 +72,9 @@ public class parseJsonpOfDirectionAPI {
                 }
 
                 //ルート情報
-              //  ma.posinfo = temp;
+                //  ma.posinfo = temp;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return routes;
