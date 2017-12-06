@@ -3,8 +3,14 @@ package jp.ac.chiba_fjb.oikawa.routetest;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+//--
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.ImageButton;
+//--
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,7 +27,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, RouteReader.RouteListener, RouteReader.PlaceListener,RouteReader.Place2Listener{
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, RouteReader.RouteListener, RouteReader.PlaceListener,RouteReader.Place2Listener, View.OnClickListener {
 
 	private Location sloc;
 	private Location eloc;
@@ -36,13 +42,54 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 	private int week;
 	private int day;
 
+	//----------------------------
+	private TextView Text1;
+	private TextView Text2;
+	private TextView Text3;
+	private TextView Text4;
+	private TextView Text5;
+	private TextView EText1;
+	private TextView EText2;
+	private Button button1;
+	private Button button2;
+	private RadioButton RadioButton1;
+	private RadioButton RadioButton2;
+	private RadioButton RadioButton3;
+	private RadioButton RadioButton4;
+	private ImageButton Imagebutton;
+
+	private TextView editText1;
+	private TextView editText2;
+	//---------------------------------
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 			                                                      .findFragmentById(R.id.map);
+	//------
+		//インスタンスの取得
+		Text1 = (TextView) findViewById(R.id.textView1);
+		Text2 = (TextView) findViewById(R.id.textView2);
+		Text3 = (TextView) findViewById(R.id.textView3);
+		Text4 = (TextView) findViewById(R.id.textView4);
+		Text5 = (TextView) findViewById(R.id.textView5);
+		EText1 = (TextView) findViewById(R.id.editText1);
+		EText2 = (TextView) findViewById(R.id.editText2);
+		button1 = (Button) findViewById(R.id.button1);
+		button2 = (Button) findViewById(R.id.button2);
+		RadioButton1 = (RadioButton) findViewById(R.id.radioButton1);
+		RadioButton2 = (RadioButton) findViewById(R.id.radioButton2);
+		RadioButton3 = (RadioButton) findViewById(R.id.radioButton3);
+		RadioButton4 = (RadioButton) findViewById(R.id.radioButton4);
 
+		Imagebutton = (ImageButton) findViewById(R.id.imageButton);
+		//タップイベント取得
+		//button1.setOnClickListener(this);
+		//button2.setOnClickListener(this);
+		Imagebutton.setOnClickListener(this);
+//----
 		mapFragment.getMapAsync(this);
 	}
 
@@ -53,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 		LatLng sydney = new LatLng(35.7016369, 139.9836126);                //位置設定
 		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,14.0f));   //範囲2.0～21.0(全体～詳細)
 		//ルート検索
-		RouteReader.recvRoute("JR船橋駅","船橋情報ビジネス専門学校",this);
+		//RouteReader.recvRoute("JR船橋駅","船橋情報ビジネス専門学校",this);
 	}
 
 	@Override
@@ -194,4 +241,16 @@ public void RouteSearch(List<List<HashMap<String, String>>> result){
         mMap.addPolyline(lineOptions);
     }
 }
+
+	@Override
+	public void onClick(View view) {
+		//マーカークリア
+		//Marker.setMap(null);
+		//経路クリア
+		mMap.clear();
+		//ルート検索
+		editText1 = (TextView) findViewById(R.id.editText1);
+		editText2 = (TextView) findViewById(R.id.editText2);
+		RouteReader.recvRoute(editText1.getText().toString(), editText2.getText().toString(), this);
+	}
 }
