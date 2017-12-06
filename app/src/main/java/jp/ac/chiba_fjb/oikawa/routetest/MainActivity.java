@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 			mMap.addMarker(new MarkerOptions().position(new LatLng(sloc.lat, sloc.lng)).title(r.legs[0].start_address).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 			mMap.addMarker(new MarkerOptions().position(new LatLng(eloc.lat, eloc.lng)).title(r.legs[0].end_address).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(sloc.lat,sloc.lng),14.0f));
-
+			System.out.println(routeData.routes[0].legs[0].duration.text);
     		List<List<HashMap<String,String>>> list = new parseJsonpOfDirectionAPI().parse(routeData);
 			RouteSearch(list);
 			cal = Calendar.getInstance();
@@ -151,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 		mName.setText(placeidData.result.name);
 		mPhone.setText(placeidData.result.formatted_phone_number);
 		if(placeidData.result.opening_hours!=null&&placeidData.result.opening_hours.weekday_text.length>0){
-			placeidData.result.opening_hours.weekday_text[day].toString().replace("Monday","月曜日");
 			System.out.println(placeidData.result.opening_hours.weekday_text[day]);
 			mOpen.setText(placeidData.result.opening_hours.weekday_text[day]);
 		}
