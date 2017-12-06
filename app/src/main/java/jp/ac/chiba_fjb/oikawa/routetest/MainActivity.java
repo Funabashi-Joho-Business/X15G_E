@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 	private TextView mType;//タイプとってない
 	private TextView mPhone;
     private TextView mOpen;
-    private int count=0;
 	private List<String> idlist= new ArrayList();
 	private Calendar cal;
 	private int week;
@@ -91,21 +90,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 		}
 
 		RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
-				"food",new LatLng(sloc.lat, sloc.lng),50,this);
+				"food",new LatLng(sloc.lat, sloc.lng),25,this);
 
 		for(int i=0;i<routeData.routes[0].legs[0].steps.length;i++) {
 			RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
-					"food", new LatLng(routeData.routes[0].legs[0].steps[i].start_location.lat,routeData.routes[0].legs[0].steps[i].start_location.lng), 50, this);
+					"food", new LatLng(routeData.routes[0].legs[0].steps[i].start_location.lat,routeData.routes[0].legs[0].steps[i].start_location.lng), 25, this);
 		}
 
 		RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
-				"food",new LatLng(eloc.lat, eloc.lng),50,this);
+				"food",new LatLng(eloc.lat, eloc.lng),25,this);
 	}
 
 	@Override
 	public void onPlace(PlaceData placeData) {
 		for(PlaceData.Results result : placeData.results){
-			int count=0;
 			System.out.println(result.geometry.location.lat+","+result.geometry.location.lng);
 			System.out.println(result.name);
 			String place_id = result.place_id;

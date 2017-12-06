@@ -26,21 +26,9 @@ public class RouteData{
 			public jp.ac.chiba_fjb.oikawa.routetest.Dis duration;
 
 			public String travel_mode;
-
-
 		}
 		public Steps[] steps;
-//	public jp.ac.chiba_fjb.oikawa.routetest.Points polyline;
 	}
-
-	@JsonIgnoreProperties(ignoreUnknown=true)
-	public static class Geocoded_waypoints{
-			public String geocoder_status;
-			public String place_id;
-			public String types[];
-
-	}
-
 	@JsonIgnoreProperties(ignoreUnknown=true)
 	public static class Routes{
 		public Legs[] legs;
@@ -48,6 +36,4 @@ public class RouteData{
 	}
 
 	public Routes[] routes;
-
-    public Geocoded_waypoints[] waypoints;
 }
