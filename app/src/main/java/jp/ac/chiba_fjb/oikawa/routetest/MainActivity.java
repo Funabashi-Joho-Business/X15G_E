@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 	private TextView mType;//タイプとってない
 	private TextView mPhone;
     private TextView mOpen;
-    private int count=0;
 	private List<String> idlist= new ArrayList();
 	private Calendar cal;
 	private int week;
@@ -116,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 			}
 			else {
 				RouteReader.recvPlace2(place_id, "AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc", this);
-				Location loc = result.geometry.location;
 				mMap.addMarker(new MarkerOptions().position(new LatLng(result.geometry.location.lat,result.geometry.location.lng)).title(result.name));
 				idlist.add(result.place_id);
 			}
@@ -137,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 		mName.setText(placeidData.result.name);
 		mPhone.setText(placeidData.result.formatted_phone_number);
 		if(placeidData.result.opening_hours!=null&&placeidData.result.opening_hours.weekday_text.length>0){
-			placeidData.result.opening_hours.weekday_text[day].toString().replace("Monday","月曜日");
 			System.out.println(placeidData.result.opening_hours.weekday_text[day]);
 			mOpen.setText(placeidData.result.opening_hours.weekday_text[day]);
 		}
