@@ -36,31 +36,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 	private TextView mType;//タイプとってない
 	private TextView mPhone;
     private TextView mOpen;
-    private int count=0;
 	private List<String> idlist= new ArrayList();
 	private Calendar cal;
 	private int week;
 	private int day;
 
-	//----------------------------
-	private TextView Text1;
-	private TextView Text2;
-	private TextView Text3;
-	private TextView Text4;
-	private TextView Text5;
 	private TextView EText1;
 	private TextView EText2;
-	private Button button1;
-	private Button button2;
-	private RadioButton RadioButton1;
-	private RadioButton RadioButton2;
-	private RadioButton RadioButton3;
-	private RadioButton RadioButton4;
 	private ImageButton Imagebutton;
 
 	private TextView editText1;
 	private TextView editText2;
-	//---------------------------------
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,28 +54,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 		setContentView(R.layout.activity_main);
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 			                                                      .findFragmentById(R.id.map);
-	//------
-		//インスタンスの取得
-		Text1 = (TextView) findViewById(R.id.textView1);
-		Text2 = (TextView) findViewById(R.id.textView2);
-		Text3 = (TextView) findViewById(R.id.textView3);
-		Text4 = (TextView) findViewById(R.id.textView4);
-		Text5 = (TextView) findViewById(R.id.textView5);
+
 		EText1 = (TextView) findViewById(R.id.editText1);
 		EText2 = (TextView) findViewById(R.id.editText2);
-		button1 = (Button) findViewById(R.id.button1);
-		button2 = (Button) findViewById(R.id.button2);
-		RadioButton1 = (RadioButton) findViewById(R.id.radioButton1);
-		RadioButton2 = (RadioButton) findViewById(R.id.radioButton2);
-		RadioButton3 = (RadioButton) findViewById(R.id.radioButton3);
-		RadioButton4 = (RadioButton) findViewById(R.id.radioButton4);
-
 		Imagebutton = (ImageButton) findViewById(R.id.imageButton);
-		//タップイベント取得
-		//button1.setOnClickListener(this);
-		//button2.setOnClickListener(this);
 		Imagebutton.setOnClickListener(this);
-//----
+
 		mapFragment.getMapAsync(this);
 	}
 
@@ -99,8 +69,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 		mMap = googleMap;
 		LatLng sydney = new LatLng(35.7016369, 139.9836126);                //位置設定
 		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,14.0f));   //範囲2.0～21.0(全体～詳細)
-		//ルート検索
-		//RouteReader.recvRoute("JR船橋駅","船橋情報ビジネス専門学校",this);
 	}
 
 	@Override
@@ -138,21 +106,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 		}
 
 		RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
-				"food",new LatLng(sloc.lat, sloc.lng),50,this);
+				"food",new LatLng(sloc.lat, sloc.lng),25,this);
 
 		for(int i=0;i<routeData.routes[0].legs[0].steps.length;i++) {
 			RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
-					"food", new LatLng(routeData.routes[0].legs[0].steps[i].start_location.lat,routeData.routes[0].legs[0].steps[i].start_location.lng), 50, this);
+					"food", new LatLng(routeData.routes[0].legs[0].steps[i].start_location.lat,routeData.routes[0].legs[0].steps[i].start_location.lng), 25, this);
 		}
 
 		RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
-				"food",new LatLng(eloc.lat, eloc.lng),50,this);
+				"food",new LatLng(eloc.lat, eloc.lng),25,this);
 	}
 
 	@Override
 	public void onPlace(PlaceData placeData) {
 		for(PlaceData.Results result : placeData.results){
-			int count=0;
 			System.out.println(result.geometry.location.lat+","+result.geometry.location.lng);
 			System.out.println(result.name);
 			String place_id = result.place_id;

@@ -53,176 +53,62 @@
                 android:weightSum="1">
 
                 <LinearLayout
-                    android:layout_width="148dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:weightSum="1">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="30dp"
+                        android:layout_weight="0.02"
                         android:orientation="horizontal">
 
                         <EditText
                             android:id="@+id/editText1"
-                            android:layout_width="192dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@color/colorPrimary"
                             android:ems="10"
                             android:hint="出発地を入力"
                             android:inputType="textPersonName" />
 
-                        <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/colorPrimary"
-                            android:text="現在地" />
-
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="30dp"
+                        android:layout_weight="0.02"
                         android:orientation="horizontal">
 
                         <EditText
                             android:id="@+id/editText2"
-                            android:layout_width="192dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@color/colorPrimary"
                             android:ems="10"
                             android:hint="目的地を入力"
                             android:inputType="textPersonName" />
 
-                        <ImageButton
-                            android:id="@+id/imageButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@color/colorPrimary"
-                            app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/textView1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:paddingTop="60dp"
-                                    android:text="検索の設定"
-                                    android:visibility="gone" />
-
-                                <TextView
-                                    android:id="@+id/textView2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="飲食店の検索範囲(m)"
-                                    android:visibility="gone" />
-
-                                <LinearLayout
-                                    android:layout_width="234dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:orientation="horizontal">
-
-                                    <RadioGroup
-                                        android:id="@+id/radiogroup"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="0.15">
-
-                                        <RadioButton
-                                            android:id="@+id/radioButton1"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="50"
-                                            android:visibility="gone" />
-
-                                        <RadioButton
-                                            android:id="@+id/radioButton2"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="100"
-                                            android:visibility="gone" />
-
-                                        <RadioButton
-                                            android:id="@+id/radioButton3"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="300"
-                                            android:visibility="gone" />
-
-                                        <RadioButton
-                                            android:id="@+id/radioButton4"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:checked="true"
-                                            android:text="500"
-                                            android:visibility="gone" />
-
-                                    </RadioGroup>
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-                        </FrameLayout>
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="30dp"
-                    android:layout_height="80dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
                     android:orientation="vertical"
                     android:weightSum="1">
 
-                    <Button
-                        android:id="@+id/button2"
+                    <ImageButton
+                        android:id="@+id/imageButton"
                         android:layout_width="match_parent"
-                        android:layout_height="58dp"
-                        android:layout_weight="0.10"
+                        android:layout_height="match_parent"
                         android:background="@color/colorPrimary"
-                        android:text="詳細" />
+                        app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
+
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.36"
-                    android:background="@android:color/holo_blue_bright"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/button1"
-                        android:layout_width="33dp"
-                        android:layout_height="60dp"
-                        android:background="@color/colorPrimary"
-                        android:onClick="onClick"
-                        android:text="メ" />
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
