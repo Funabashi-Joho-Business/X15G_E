@@ -36,13 +36,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 	private TextView mType;//タイプとってない
 	private TextView mPhone;
     private TextView mOpen;
+	private TextView mCount;
 	private List<String> idlist= new ArrayList();
 	private Calendar cal;
 	private int week;
 	private int day;
-
-	private TextView EText1;
-	private TextView EText2;
+	private int count=1;
+	private LinearLayout output;
+	private LinearLayout layout;
 	private ImageButton Imagebutton;
 
 	private TextView editText1;
@@ -55,11 +56,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 			                                                      .findFragmentById(R.id.map);
 
-		EText1 = (TextView) findViewById(R.id.editText1);
-		EText2 = (TextView) findViewById(R.id.editText2);
 		Imagebutton = (ImageButton) findViewById(R.id.imageButton);
 		Imagebutton.setOnClickListener(this);
-
+		editText1 = (TextView) findViewById(R.id.editText1);
+		editText2 = (TextView) findViewById(R.id.editText2);
+	    output = (LinearLayout) findViewById(R.id.output);
+		layout = (LinearLayout)findViewById(R.id.layout1);
 		mapFragment.getMapAsync(this);
 	}
 
@@ -104,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     break;
 			}
 		}
-
 		RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
 				"food",new LatLng(sloc.lat, sloc.lng),25,this);
 
@@ -126,25 +127,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //			System.out.print(result.types);
 //     		mType.setText(result.types[0]);
 			if(result.types[0].toString().equals("grocery_or_supermarket")||result.types[0].toString().equals("food")||result.types[0].toString().equals("convenience_store")||idlist.contains(result.place_id)==true){
-
 			}
 			else {
 				RouteReader.recvPlace2(place_id, "AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc", this);
-				Location loc = result.geometry.location;
-				mMap.addMarker(new MarkerOptions().position(new LatLng(result.geometry.location.lat,result.geometry.location.lng)).title(result.name));
 				idlist.add(result.place_id);
 			}
-
 		}
 	}
 
 	@Override
 	public void onPlace2(PlaceidData placeidData) {
-		LinearLayout output = (LinearLayout) findViewById(R.id.output);
-		LinearLayout layout;
-
 		layout = (LinearLayout)getLayoutInflater().inflate(R.layout.layout1, null);   //レイアウトをその場で生成
 		output.addView(layout);
+		output.clearChildFocus(layout);
+		mMap.addMarker(new MarkerOptions().position(new LatLng(placeidData.result.geometry.location.lat,placeidData.result.geometry.location.lng)).title(count+". "+placeidData.result.name));
+		mCount =(TextView) layout.findViewById(R.id.count);
+		mCount.setText(String.valueOf(count));
+		count++;
 		mName = (TextView) layout.findViewById(R.id.name);
 		mPhone = (TextView) layout.findViewById(R.id.formatted_phone_number);
         mOpen = (TextView) layout.findViewById(R.id.opening_hours);
@@ -212,11 +211,11 @@ public void RouteSearch(List<List<HashMap<String, String>>> result){
 	public void onClick(View view) {
 		//マーカークリア
 		//Marker.setMap(null);
+		output.clearChildFocus(layout);
 		//経路クリア
 		mMap.clear();
+
 		//ルート検索
-		editText1 = (TextView) findViewById(R.id.editText1);
-		editText2 = (TextView) findViewById(R.id.editText2);
 		RouteReader.recvRoute(editText1.getText().toString(), editText2.getText().toString(), this);
 	}
 }

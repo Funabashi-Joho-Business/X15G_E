@@ -1,6 +1,7 @@
 package jp.ac.chiba_fjb.oikawa.routetest;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.maps.model.Geometry;
 
 /**
  * Created by x15g025 on 2017/10/31.
@@ -17,6 +18,8 @@ public class PlaceidData {
         public Opening_hours opening_hours;
         public String name;
         public String[] types;
+        public Geometry geometry;
+
     }
 
     public static class Photos {
