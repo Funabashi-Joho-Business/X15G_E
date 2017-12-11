@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 			String place_id = result.place_id;
 //			System.out.print(result.types);
 //     		mType.setText(result.types[0]);
-			if(result.types[0].toString().equals("grocery_or_supermarket")||result.types[0].toString().equals("food")||result.types[0].toString().equals("convenience_store")||idlist.contains(result.place_id)==true){
+			if(result.types[0].toString().equals("grocery_or_supermarket")||result.types[0].toString().equals("food")||result.types[0].toString().equals("convenience_store")||idlist.contains(result.place_id)==true||result.name.toString().equals("天鼓")){
 			}
 			else {
 				RouteReader.recvPlace2(place_id, "AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc", this);

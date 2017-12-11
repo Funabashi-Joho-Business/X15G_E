@@ -36,15 +36,6 @@
                     android:text="検索結果"
                     android:textSize="10sp" />
 
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/holo_orange_light"
-                    android:text="お気に入り"
-                    android:textSize="10sp" />
-
             </LinearLayout>
 
             <ScrollView
