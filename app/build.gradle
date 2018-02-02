@@ -16,6 +16,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            minifyEnabled false
+            zipAlignEnabled true
+        }
     }
 
     packagingOptions {
@@ -40,7 +47,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     testCompile 'junit:junit:4.12'
     compile 'com.google.android.gms:play-services-maps:11.0.4'
-
     compile 'com.google.maps:google-maps-services:0.2.4'
 }
 

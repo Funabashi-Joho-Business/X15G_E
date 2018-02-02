@@ -1,0 +1,9 @@
+diff a/app/src/main/java/jp/ac/chiba_fjb/oikawa/routetest/MainActivity.java b/app/src/main/java/jp/ac/chiba_fjb/oikawa/routetest/MainActivity.java	(rejected hunks)
+@@ -106,7 +106,6 @@
+                     break;
+ 			}
+ 		}
+-
+ 		RouteReader.recvPlace("AIzaSyCTBLImkAQi3CoNVJ7wXe32cNwHKTFSOqc",
+ 				"food",new LatLng(sloc.lat, sloc.lng),25,this);
+ 

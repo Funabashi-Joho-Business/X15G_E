@@ -23,7 +23,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="21dp"
                 android:background="@android:drawable/editbox_dropdown_dark_frame"
                 android:orientation="horizontal">
 
@@ -36,21 +36,11 @@
                     android:text="検索結果"
                     android:textSize="10sp" />
 
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/holo_orange_light"
-                    android:text="お気に入り"
-                    android:textSize="10sp" />
-
             </LinearLayout>
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:id="@+id/output"

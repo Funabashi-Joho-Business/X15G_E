@@ -59,4 +59,42 @@ public class Json{
 		}
 		return null;
 	}
+    public static <T> T send2(String adress, Class<T> valueType){
+        HttpURLConnection connection = null;
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            //JSON用オブジェクトの作成
+            ObjectMapper mapper = new ObjectMapper();
+            //URLの設定
+            URL url = new URL(adress);
+            connection = (HttpURLConnection)url.openConnection();
+            connection.setUseCaches(false);
+            connection.setRequestMethod("GET");
+            connection.setInstanceFollowRedirects(true);
+            connection.setRequestProperty("Content-Type", String.format("text/plain"));
+
+            InputStreamReader is = new InputStreamReader(connection.getInputStream(),"UTF-8");
+            BufferedReader br    = new BufferedReader(is);
+
+            //    １行ずつ書き出す
+            String line;
+            while((line=br.readLine()) != null)
+            {
+                sb.append(line);
+            }
+            is.close();
+            br.close();
+            return mapper.readValue(sb.toString(),valueType);
+        }catch (Exception e){
+            e.printStackTrace();
+            //エラー応答の内容を返す
+            System.out.println(sb.toString());
+        }
+        finally {
+            if(connection != null)
+                connection.disconnect();
+        }
+        return null;
+    }
 }

@@ -27,7 +27,6 @@ public class RouteData{
 
 			public String travel_mode;
 
-
 		}
 		public Steps[] steps;
 //	public jp.ac.chiba_fjb.oikawa.routetest.Points polyline;

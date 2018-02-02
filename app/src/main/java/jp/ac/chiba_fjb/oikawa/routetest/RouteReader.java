@@ -2,9 +2,13 @@ package jp.ac.chiba_fjb.oikawa.routetest;
 
 import android.os.Handler;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 
 /**
@@ -20,6 +24,9 @@ public class RouteReader {
 	}
 	public interface  Place2Listener{
 		void onPlace2(PlaceidData placeidData);
+	}
+	public interface  Place3Listener{
+		void onPlace3(GnaviData gnaviData);
 	}
 
 
@@ -48,7 +55,6 @@ public class RouteReader {
 						listener.onRoute(routeData);
 					}
 				});
-
 
 			}
 		}.start();
@@ -114,7 +120,33 @@ public class RouteReader {
 		}.start();
 		return true;
 	}
+	public static boolean recvPlace3(final double lat,double lng, final Place3Listener listener){
+		String url = null;
+		try {
+			url = String.format(
+					"https://api.gnavi.co.jp/RestSearchAPI/20150630/?format=json&keyid=c22b989baeb3c82dca753230542d2ac6&latitude=%f&longitude=%f&range=1",lat,lng);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 
+		final Handler handler = new Handler();
+		final String finalUrl = url;
+		new Thread(){
+			@Override
+			public void run() {
+				final GnaviData gnaviData = Json.send2(finalUrl,GnaviData.class);
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						listener.onPlace3(gnaviData);
+					}
+				});
+
+			}
+		}.start();
+		return true;
+	}
 
 
 

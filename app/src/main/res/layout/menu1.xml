@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,31 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="left">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
-            android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:visibility="visible">
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@android:dimen/app_icon_size"
-                android:text="お気に入り"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ヘルプ"
-                android:visibility="gone" />
-
-        </LinearLayout>
 
         <LinearLayout
 
@@ -43,60 +19,146 @@
 
             <LinearLayout
                 android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"></LinearLayout>
+                android:layout_height="wrap_content"
+                android:hapticFeedbackEnabled="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="566dp"
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@color/common_google_signin_btn_text_dark_focused"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/GPSButton"
+                            style="@style/Widget.AppCompat.ImageButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginLeft="1dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/colorPrimary"
+                            app:srcCompat="@android:drawable/ic_menu_mylocation" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="408dp"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/common_google_signin_btn_text_dark_default"
+                        android:text="検索範囲:25m" />
+
+                    <SeekBar
+                        android:id="@+id/seekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_weight="611574.13"
+                        android:background="@color/common_google_signin_btn_text_light_disabled"
+                        android:max="4"
+                        android:progress="1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="743003"
+                        android:orientation="horizontal"></LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:weightSum="1">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal"
                     android:weightSum="1">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:background="@color/common_google_signin_btn_text_light_pressed"
-                        android:orientation="horizontal">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:weightSum="1">
 
-                        <EditText
-                            android:id="@+id/editText1"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="1dp"
-                            android:layout_marginLeft="1dp"
-                            android:layout_marginRight="1dp"
-                            android:layout_marginTop="1dp"
-                            android:background="@android:color/holo_blue_bright"
-                            android:ems="10"
-                            android:hint="出発地を入力"
-                            android:inputType="textPersonName" />
+                            android:layout_height="30dp"
+                            android:background="@color/common_google_signin_btn_text_light_pressed"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/editText1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="1dp"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginRight="1dp"
+                                android:layout_marginTop="1dp"
+                                android:background="@color/colorPrimary"
+                                android:ems="10"
+                                android:hint="出発地を入力"
+                                android:inputType="textPersonName" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="183dp"
+                            android:layout_height="30dp"
+                            android:background="@color/common_google_signin_btn_text_light_pressed"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/editText2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="1dp"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginRight="1dp"
+                                android:background="@color/colorPrimary"
+                                android:ems="10"
+                                android:hint="目的地を入力"
+                                android:inputType="textPersonName" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="183dp"
-                        android:layout_height="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
                         android:background="@color/common_google_signin_btn_text_light_pressed"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        android:weightSum="1">
 
-                        <EditText
-                            android:id="@+id/editText2"
+                        <ImageButton
+                            android:id="@+id/imageButton"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginBottom="1dp"
-                            android:layout_marginLeft="1dp"
                             android:layout_marginRight="1dp"
-                            android:background="@android:color/holo_blue_bright"
-                            android:ems="10"
-                            android:hint="目的地を入力"
-                            android:inputType="textPersonName" />
+                            android:layout_marginTop="1dp"
+                            android:background="@color/colorPrimary"
+                            app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
                     </LinearLayout>
 
@@ -104,23 +166,16 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@color/common_google_signin_btn_text_light_pressed"
-                    android:orientation="vertical"
-                    android:weightSum="1">
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.95"
+                    android:orientation="horizontal"></LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/imageButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="1dp"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginTop="1dp"
-                        android:background="@android:color/holo_blue_bright"
-                        app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
-
-                </LinearLayout>
-
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:text="Supported by ぐるなびWebService : http://api.gnavi.co.jp/api/scope/ "
+                    android:textSize="7.5sp" />
             </LinearLayout>
 
         </LinearLayout>
